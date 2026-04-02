@@ -1,4 +1,7 @@
-dist/ 
-build/ 
 *.zip 
 *.exe 
+dist/ 
+build/ 
+*.exe 
+*.zip 
+bin/ 

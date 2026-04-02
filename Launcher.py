@@ -59,20 +59,32 @@ def find_java_bin(folder):
     return None
 
 def apply_skin_as_pack(skin_source_path, game_dir):
-    """Creates a local resource pack to inject the skin into offline mode."""
     pack_root = os.path.join(game_dir, "resourcepacks", "SkinPack")
+    # We add two paths: 'entity/player' and 'entity' just to be safe
     skin_dest = os.path.join(pack_root, "assets", "minecraft", "textures", "entity", "player")
+    skin_dest_alt = os.path.join(pack_root, "assets", "minecraft", "textures", "entity")
     
     if os.path.exists(pack_root): shutil.rmtree(pack_root)
     os.makedirs(skin_dest, exist_ok=True)
+    os.makedirs(skin_dest_alt, exist_ok=True)
 
-    # Create pack.mcmeta (Format 34 is for 1.21)
+    # pack.mcmeta - use format 34 for 1.21
     with open(os.path.join(pack_root, "pack.mcmeta"), "w") as f:
         f.write('{"pack": {"pack_format": 34, "description": "Launcher Skin Pack"}}')
 
-    # Copy skin to all possible default slots
-    for name in ["steve.png", "alex.png", "wide.png", "slim.png"]:
+    # Minecraft looks for these specific names. By replacing all of them,
+    # you will have your skin regardless of which "default" character the game picks.
+    target_names = [
+        "steve.png", "alex.png", "wide.png", "slim.png", 
+        "programer_art_steve.png", "programer_art_alex.png"
+    ]
+    
+    for name in target_names:
+        # Copy to the /player folder
         shutil.copy(skin_source_path, os.path.join(skin_dest, name))
+        # Copy to the /entity folder (older versions/fallback)
+        shutil.copy(skin_source_path, os.path.join(skin_dest_alt, name))
+        
     return "SkinPack"
 
 # --- UI CLASS ---
