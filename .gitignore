@@ -1,7 +1,8 @@
-*.zip 
-*.exe 
-dist/ 
-build/ 
-*.exe 
-*.zip 
-bin/ 
+bin/
+dist/
+build/
+__pycache__/
+*.spec
+pyarmor_runtime_*/
+.DS_Store
+Thumbs.db
