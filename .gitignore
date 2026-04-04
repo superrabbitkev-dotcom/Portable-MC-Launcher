@@ -1,10 +1,9 @@
+launcher.py 
+installer.py 
 __pycache__/ 
 build/ 
 dist/ 
 bin/ 
 game/ 
 runtime/ 
-*.spec 
-*.pyc 
-.venv/ 
-venv/
+*.spec
